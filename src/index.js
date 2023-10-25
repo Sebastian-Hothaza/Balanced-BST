@@ -21,21 +21,17 @@ const treeFactory = (arr, root) => {
 
     // Note: insert does not guarantee tree balance is preserved
     function insert(value, cur = this.root){
-        console.log("--- Inserting the following element: ",value);
-        
-        //if (value == root.data) return root; // Duplicate insertion, thus ignored
-
         if (cur == null){ // reached beyond leaf node in the "correct null", thus we insert
             cur = nodeFactory(value,null,null);
             return cur;
         }
-
+    
+        if (value == cur.data) return cur; // Duplicate insertion, thus ignored
         if (value > cur.data){ // We must traverse down right side
             cur.right = insert(value, cur.right);
         } else {
             cur.left = insert(value, cur.left);
         }
-        //console.log(cur.data); //call stack unwinding
         return cur;
     }
 
@@ -65,7 +61,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
   const myTree = treeFactory([1,2,3,4,5,6,7,8,9]);
   prettyPrint(myTree.root);
-
   prettyPrint(myTree.insert(10));
 
   
