@@ -1,4 +1,4 @@
-export {treeFactory, prettyPrint}
+export {treeFactory, consolePrint}
 
 const nodeFactory = (data, left, right) => {
     return{
@@ -151,21 +151,22 @@ const treeFactory = (arr, root) => {
     return{
         get root(){return root},
         set root(newRoot){root=newRoot},
-        insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth, isBalanced, rebalance
+        insert, remove, find, levelOrder, inOrder, preOrder,
+        postOrder, height, depth, isBalanced, rebalance
     };
 }
 
 
-
-const prettyPrint = (node, prefix = "", isLeft = true) => {
+// Prints tree to console
+const consolePrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
     }
     if (node.right !== null) {
-      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+        consolePrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
     }
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
     if (node.left !== null) {
-      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+        consolePrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
 };
