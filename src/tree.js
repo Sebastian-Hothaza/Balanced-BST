@@ -1,3 +1,5 @@
+export {treeFactory, prettyPrint}
+
 const nodeFactory = (data, left, right) => {
     return{
         get data(){return data;}, set data(newData){data=newData},
@@ -114,12 +116,42 @@ const treeFactory = (arr, root) => {
         return result;
     }
 
-    
+    function height(cur=this.root){
+        if (!cur) return -1;
+        let lHeight = height(cur.left)+1;
+        let rHeight = height(cur.right)+1;
+        if (lHeight > rHeight) return lHeight;
+        return rHeight;
+    }
+
+    // Given a root and target, returns depth of target relative to root
+    function depth(target, cur=this.root, depthIDX=0){
+        if (!cur) return null;
+        if (cur.data == target){
+            return depthIDX;
+        } else if (cur.data<target){
+            depthIDX++;
+            return depth(target, cur.right, depthIDX)
+        } else {
+            depthIDX++;
+            return depth(target, cur.left, depthIDX)
+        }
+    }
+
+    function isBalanced(cur=this.root){
+        return Math.abs(height(cur.left) - height(cur.right)) <= 1
+    }
+
+    function rebalance(cur=this.root){
+        return this.root = buildTree(this.inOrder()); // this is how we modify existing
+    }
+
+
 
     return{
         get root(){return root},
         set root(newRoot){root=newRoot},
-        insert, remove, find, levelOrder, inOrder, preOrder, postOrder
+        insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth, isBalanced, rebalance
     };
 }
 
@@ -137,17 +169,3 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
 };
-
-
-function multiply10(x){
-    return x*10;
-}
-
-
-const myTree = treeFactory([10,20,30,40]);
-const myTreeB = treeFactory([1,2,3,4,5,6,7,8,9]);
-
-
-
-
-
